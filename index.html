@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSchool - School Event Management Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo"><i class="fa-solid fa-graduation-cap"></i> EventSchool</div>
+      <ul class="nav-menu">
+        <li><a href="#events">Events</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><button class="btn btn-primary btn-sm" onclick="openModal('createEventModal')"><i class="fa-solid fa-plus"></i> New Event</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Streamline Your <span>School Campus Events</span></h1>
+      <p>The complete platform for organizing academic fairs, sports meets, cultural programs, and parent-teacher conferences with persistent database tracking.</p>
+      <div class="hero-btns">
+        <a href="#events" class="btn btn-primary">Explore Events</a>
+        <button class="btn btn-outline" onclick="openModal('createEventModal')">Host Event</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" id="events">
+    <h2 class="section-title">Upcoming School Events</h2>
+    <p class="section-subtitle">Discover and register for upcoming student activities and meetings</p>
+
+    <div class="filter-bar">
+      <input type="text" id="searchInput" class="filter-input" placeholder="Search events or venues..." oninput="filterEvents()">
+      <select id="categoryFilter" class="filter-select" onchange="filterEvents()">
+        <option value="All">All Categories</option>
+        <option value="Academic">Academic</option>
+        <option value="Sports">Sports</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Workshops">Workshops</option>
+        <option value="Parent-Teacher Meets">Parent-Teacher Meets</option>
+      </select>
+      <select id="statusFilter" class="filter-select" onchange="filterEvents()">
+        <option value="All">All Status</option>
+        <option value="Open for Registration">Open for Registration</option>
+        <option value="Planning">Planning</option>
+        <option value="In Progress">In Progress</option>
+      </select>
+      <button class="btn btn-outline" onclick="resetFilters()">Reset</button>
+    </div>
+
+    <div class="events-grid" id="eventsGrid"></div>
+
+    <div class="dashboard-section" id="dashboard">
+      <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-gauge"></i> Management Dashboard</h2>
+      <div class="dash-tabs">
+        <button class="dash-tab-btn active" onclick="switchDashTab('panel-registrations')">Registrations</button>
+      </div>
+      <div class="dash-panel active" id="panel-registrations">
+        <h3>Participant Registrations (Saved in SQLite DB)</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Event Title</th>
+              <th>Type</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="registrationsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 EventSchool Management System. Full Stack Python Flask + SQLite.</p>
+  </footer>
+
+  <div id="toast">Notification Message</div>
+
+  <!-- Registration Modal -->
+  <div id="registerModal" class="modal-backdrop" style="display:none;">
+    <div class="modal-box">
+      <h3>Register for Event</h3>
+      <form id="registerForm" onsubmit="handleRegistrationSubmit(event)" style="margin-top:15px; display:flex; flex-direction:column; gap:12px;">
+        <input type="hidden" id="regEventId">
+        <input type="text" id="regEventTitle" class="filter-input" readonly style="background:#eee;">
+        <input type="text" id="regName" class="filter-input" placeholder="Participant Full Name" required>
+        <input type="email" id="regEmail" class="filter-input" placeholder="Email Address" required>
+        <select id="regType" class="filter-select">
+          <option value="Student">Student</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Parent">Parent</option>
+          <option value="Guest">Guest Speaker</option>
+        </select>
+        <input type="text" id="regPhone" class="filter-input" placeholder="Phone Number" required>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button type="submit" class="btn btn-primary flex-1">Confirm Registration</button>
+          <button type="button" class="btn btn-outline" onclick="closeModal('registerModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Event Modal -->
+  <div id="createEventModal" class="modal-backdrop" style="display:none;">
+    <div class="modal-box">
+      <h3>Create New School Event</h3>
+      <form onsubmit="handleCreateEvent(event)" style="margin-top:15px; display:flex; flex-direction:column; gap:12px;">
+        <input type="text" id="evtTitle" class="filter-input" placeholder="Event Title" required>
+        <select id="evtCategory" class="filter-select">
+          <option value="Academic">Academic</option>
+          <option value="Sports">Sports</option>
+          <option value="Cultural">Cultural</option>
+          <option value="Workshops">Workshops</option>
+          <option value="Parent-Teacher Meets">Parent-Teacher Meets</option>
+        </select>
+        <select id="evtStatus" class="filter-select">
+          <option value="Open for Registration">Open for Registration</option>
+          <option value="Planning">Planning</option>
+          <option value="In Progress">In Progress</option>
+        </select>
+        <input type="date" id="evtDate" class="filter-input" required>
+        <input type="text" id="evtTime" class="filter-input" placeholder="Time (e.g., 9:00 AM - 4:00 PM)" required>
+        <input type="text" id="evtVenue" class="filter-input" placeholder="Venue Location" required>
+        <input type="number" id="evtMax" class="filter-input" placeholder="Max Participants" required>
+        <input type="text" id="evtImage" class="filter-input" placeholder="Image URL (Unsplash Link)" required>
+        <textarea id="evtDesc" class="filter-input" placeholder="Event Description" rows="3" required></textarea>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button type="submit" class="btn btn-primary flex-1">Save to Database</button>
+          <button type="button" class="btn btn-outline" onclick="closeModal('createEventModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
