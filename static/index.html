@@ -1,1 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSchool - School Event Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="extra.css">
+</head>
+<body>
 
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="container">
+      <div>School Event Portal &bull; Welcome to EventSchool</div>
+      <div class="topbar-auth" id="topbarAuth">
+        <a onclick="openModal('loginModal')">Log in</a>
+        <a onclick="openModal('signupModal')">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="#" class="logo">🎓 EventSchool</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="notif-bell" id="notifBell" onclick="toggleNotifications()">
+          🔔 <span class="notif-badge" id="notifCount">0</span>
+          <div class="notification-dropdown" id="notifDropdown">
+            <h4>Notifications</h4>
+            <div id="notifList"><p style="font-size:0.8rem; color:#666;">No unread notifications</p></div>
+          </div>
+        </div>
+        <a href="#events" class="btn btn-primary btn-sm">Explore Events</a>
+        <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>Empowering School Events with <span>Seamless Management</span></h1>
+        <p>Discover, organize, and participate in academic, sports, and cultural events effortlessly.</p>
+        <a href="#events" class="btn btn-primary">Explore Events</a>
+        <div class="stats-row">
+          <div class="stat-item">
+            <h3>35+</h3>
+            <p>Events</p>
+          </div>
+          <div class="stat-item">
+            <h3>2,400+</h3>
+            <p>Students & Parents</p>
+          </div>
+          <div class="stat-item">
+            <h3>85+</h3>
+            <p>Volunteers</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-collage">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500" class="collage-img" alt="Students">
+        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=500" class="collage-img" alt="Event">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600" class="collage-img collage-img-large" alt="Campus">
+        <div class="floating-badge">🎉 Join Upcoming Events</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section class="section container" id="events">
+    <div class="section-title">
+      <h2>Upcoming Events</h2>
+      <p>Filter by category or status to find events that interest you</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <input type="text" id="searchInput" placeholder="Search event title..." oninput="fetchEvents()">
+      </div>
+      <div class="filter-group">
+        <select id="categoryFilter" onchange="fetchEvents()">
+          <option value="All">All Categories</option>
+          <option value="Academic">Academic</option>
+          <option value="Cultural">Cultural</option>
+          <option value="Sports">Sports</option>
+          <option value="Workshops">Workshops</option>
+          <option value="Parent-Teacher Meets">Parent-Teacher Meets</option>
+          <option value="Celebrations">Celebrations</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <select id="statusFilter" onchange="fetchEvents()">
+          <option value="All">All Statuses</option>
+          <option value="Open for Registration">Open for Registration</option>
+          <option value="Planning">Planning</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <button class="btn btn-outline" onclick="resetFilters()">Reset</button>
+    </div>
+
+    <div class="events-grid" id="eventsGrid"></div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="section" id="categories" style="background: #fff;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Event Categories</h2>
+        <p>Explore events tailored to every interest</p>
+      </div>
+      <div class="category-grid">
+        <div class="category-card" onclick="filterByCategory('Academic')">
+          <div class="category-icon">📚</div>
+          <h3>Academic</h3>
+        </div>
+        <div class="category-card" onclick="filterByCategory('Cultural')">
+          <div class="category-icon">🎭</div>
+          <h3>Cultural</h3>
+        </div>
+        <div class="category-card" onclick="filterByCategory('Sports')">
+          <div class="category-icon">⚽</div>
+          <h3>Sports</h3>
+        </div>
+        <div class="category-card" onclick="filterByCategory('Workshops')">
+          <div class="category-icon">🛠️</div>
+          <h3>Workshops</h3>
+        </div>
+        <div class="category-card" onclick="filterByCategory('Parent-Teacher Meets')">
+          <div class="category-icon">🤝</div>
+          <h3>Parent-Teacher</h3>
+        </div>
+        <div class="category-card" onclick="filterByCategory('Celebrations')">
+          <div class="category-icon">🎉</div>
+          <h3>Celebrations</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule Timeline -->
+  <section class="section container" id="schedule">
+    <div class="section-title">
+      <h2>School Event Schedule</h2>
+      <p>Timeline of major upcoming activities</p>
+    </div>
+    <div class="timeline" id="timelineList"></div>
+  </section>
+
+  <!-- My Registrations Section (Logged In Students) -->
+  <section class="section container" id="myRegistrationsSection" style="display:none;">
+    <div class="section-title">
+      <h2>My Registrations</h2>
+      <p>View ticket details and status of registered events</p>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Event Title</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Ticket Code</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="myRegsTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Admin & Head Dashboard -->
+  <section class="section container" id="dashboardSection" style="display:none;">
+    <div class="section-title">
+      <h2>Management Dashboard</h2>
+      <p id="dashRoleTitle">Event Management Hub</p>
+    </div>
+    <div class="dashboard-layout">
+      <div class="dashboard-sidebar">
+        <button class="sidebar-tab active" onclick="switchDashTab('overview')">📊 Overview</button>
+        <button class="sidebar-tab" onclick="switchDashTab('events')">📅 Events</button>
+        <button class="sidebar-tab" onclick="switchDashTab('participants')">👥 Participants</button>
+        <button class="sidebar-tab" onclick="switchDashTab('resources')">📦 Resources</button>
+        <button class="sidebar-tab" onclick="switchDashTab('volunteers')">🙋 Volunteers</button>
+        <button class="sidebar-tab" onclick="switchDashTab('budget')">💰 Budget</button>
+        <button class="sidebar-tab" onclick="switchDashTab('reports')">📑 Reports</button>
+        <button class="sidebar-tab" id="msgTabBtn" onclick="switchDashTab('messages')" style="display:none;">✉️ Messages</button>
+      </div>
+      <div class="dashboard-content" id="dashContent"></div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery -->
+  <section class="section container" id="gallery">
+    <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h2>Event Gallery</h2>
+        <p>Highlights from recent school functions</p>
+      </div>
+      <button class="btn btn-primary btn-sm" id="addPhotoBtn" onclick="openModal('addPhotoModal')" style="display:none;">+ Add Photo</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- Volunteer Call-to-action -->
+  <section class="section" style="background: var(--primary); color: white; text-align: center;">
+    <div class="container">
+      <h2>Want to become an Event Volunteer?</h2>
+      <p style="margin: 15px 0;">Help organize and execute successful school events while building leadership skills!</p>
+      <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section container" id="about">
+    <div class="section-title">
+      <h2>About EventSchool</h2>
+      <p>Empowering educators, students, and parents</p>
+    </div>
+    <div style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-muted);">
+      <p>EventSchool is a comprehensive event management ecosystem designed specifically for educational institutions. It streamlines registration, participant check-ins via QR codes, resource management, budget tracking, and real-time announcements.</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section container" id="contact">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Have questions or need assistance? Send us a message.</p>
+    </div>
+    <form id="contactForm" style="max-width: 600px; margin: 0 auto;" onsubmit="handleContactSubmit(event)">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="cName" required>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="cEmail" required>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" id="cSubject" required>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="cMessage" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: #1a202c; color: white; padding: 40px 0; text-align: center;">
+    <div class="container">
+      <p>&copy; 2026 EventSchool Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <!-- Auth Modals -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+      <h3>Login to EventSchool</h3>
+      <form onsubmit="handleLogin(event)" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="signupModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+      <h3>Create Student Account</h3>
+      <form onsubmit="handleSignup(event)" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signName" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="text" id="signContact">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signPassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Event Details Modal -->
+  <div class="modal" id="eventDetailModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('eventDetailModal')">&times;</span>
+      <div id="eventModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Ticket QR Modal -->
+  <div class="modal" id="ticketModal">
+    <div class="modal-content" style="text-align: center;">
+      <span class="close-modal" onclick="closeModal('ticketModal')">&times;</span>
+      <h3>Your Event Ticket</h3>
+      <div class="qr-ticket-box">
+        <img id="qrImage" src="" alt="Ticket QR Code" style="width: 180px; height: 180px;">
+        <div class="qr-ticket-code" id="ticketCodeDisplay"></div>
+        <p style="font-size:0.85rem; color:#64748b; margin-top:8px;">Show this QR code or Ticket Code at the entrance</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create/Edit Event Modal -->
+  <div class="modal" id="createEventModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('createEventModal')">&times;</span>
+      <h3 id="eventFormTitle">Create New Event</h3>
+      <form id="eventForm" onsubmit="handleSaveEvent(event)" style="margin-top: 15px;">
+        <input type="hidden" id="evId">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="evTitle" required>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="evCategory" required>
+            <option value="Academic">Academic</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Sports">Sports</option>
+            <option value="Workshops">Workshops</option>
+            <option value="Parent-Teacher Meets">Parent-Teacher Meets</option>
+            <option value="Celebrations">Celebrations</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="evStatus">
+            <option value="Open for Registration">Open for Registration</option>
+            <option value="Planning">Planning</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="evDate" required>
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="text" id="evTime" placeholder="e.g. 10:00 AM - 02:00 PM" required>
+        </div>
+        <div class="form-group">
+          <label>Venue</label>
+          <input type="text" id="evVenue" required>
+        </div>
+        <div class="form-group">
+          <label>Participant Limit</label>
+          <input type="number" id="evLimit" value="50" min="1" required>
+        </div>
+        <div class="form-group">
+          <label>Registration Deadline</label>
+          <input type="date" id="evDeadline" required>
+        </div>
+        <div class="form-group" id="headDropdownGroup">
+          <label>Event Head</label>
+          <select id="evHead"></select>
+        </div>
+        <div class="form-group">
+          <label>Event Image (URL or Upload Max 2MB)</label>
+          <input type="text" id="evImageUrl" placeholder="Image URL">
+          <input type="file" id="evImageFile" accept="image/jpeg,image/png,image/gif,image/webp" style="margin-top:5px;" onchange="convertImageToBase64(this, 'evImageUrl')">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="evDescription" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Event</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Participant Modal -->
+  <div class="modal" id="addPartModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('addPartModal')">&times;</span>
+      <h3>Add Participant (Auto-Approved)</h3>
+      <form onsubmit="handleAddParticipant(event)" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>Select Event</label>
+          <select id="addPartEvent" required></select>
+        </div>
+        <div class="form-group">
+          <label>Participant Name</label>
+          <input type="text" id="addPartName" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="addPartEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Participant Type</label>
+          <select id="addPartType">
+            <option value="Teacher">Teacher</option>
+            <option value="Parent">Parent</option>
+            <option value="Guest">Guest</option>
+            <option value="Student">Student</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="text" id="addPartContact">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Add Participant</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Photo Modal -->
+  <div class="modal" id="addPhotoModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('addPhotoModal')">&times;</span>
+      <h3>Add Photo to Gallery</h3>
+      <form onsubmit="handleAddPhoto(event)" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="photoTitle" required>
+        </div>
+        <div class="form-group">
+          <label>Image (URL or File Upload)</label>
+          <input type="text" id="photoUrl" placeholder="Image URL">
+          <input type="file" id="photoFile" accept="image/jpeg,image/png,image/gif,image/webp" style="margin-top:5px;" onchange="convertImageToBase64(this, 'photoUrl')">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Upload Photo</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Head Modal (Admin) -->
+  <div class="modal" id="createHeadModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('createHeadModal')">&times;</span>
+      <h3>Create Event Head Account</h3>
+      <form onsubmit="handleCreateHead(event)" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="headName" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="headEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="headPassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeModal('lightboxModal')">
+    <img id="lightboxImg" class="lightbox-img" src="" alt="Lightbox">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
