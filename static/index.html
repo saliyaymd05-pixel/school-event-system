@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EventSchool - School Event Management System</title>
+  
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  
+  <!-- Flask Static CSS Connection -->
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
@@ -26,8 +30,8 @@
   <header class="main-header">
     <div class="header-container">
       <div class="brand-group">
-        <!-- 3-bar Hamburger toggle button for Left Sidebar -->
-        <button class="hamburger-btn" onclick="toggleSidebar()" title="Toggle Navigation Menu">
+        <!-- 3-Bar Left Sidebar Drawer Toggle -->
+        <button class="hamburger-btn" onclick="toggleSidebar()" title="Toggle Menu">
           <i class="fa-solid fa-bars"></i>
         </button>
         <a href="#home" class="brand-logo">
@@ -36,7 +40,7 @@
         </a>
       </div>
 
-      <nav class="nav-links" id="navMenu">
+      <nav class="nav-links">
         <a href="#home" class="nav-link active">Home</a>
         <a href="#events" class="nav-link">Events</a>
         <a href="#categories" class="nav-link">Categories</a>
@@ -55,7 +59,7 @@
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar-drawer" id="sidebarDrawer">
     <div class="sidebar-header">
-      <h3><i class="fa-solid fa-bars-staggered"></i> Navigation Menu</h3>
+      <h3><i class="fa-solid fa-sliders"></i> Navigation Menu</h3>
       <button class="close-sidebar-btn" onclick="toggleSidebar()">&times;</button>
     </div>
     <ul class="sidebar-menu">
@@ -84,7 +88,7 @@
 
       <div class="hero-visual">
         <div class="image-grid">
-          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=80" alt="School Science Fair" class="grid-img img-main">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=80" alt="Science Fair" class="grid-img img-main">
           <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80" alt="Cultural Stage" class="grid-img img-sub-1">
           <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80" alt="Sports Day" class="grid-img img-sub-2">
         </div>
@@ -113,7 +117,6 @@
           <option value="Cultural">Cultural</option>
           <option value="Sports">Sports</option>
           <option value="Workshops">Workshops</option>
-          <option value="Parent-Teacher Meets">Parent-Teacher Meets</option>
         </select>
       </div>
       <div class="filter-actions">
@@ -192,7 +195,7 @@
     <div class="dashboard-layout">
       <main class="dash-content">
         <div id="headWelcomeBanner" class="head-welcome-banner">
-          <i class="fa-solid fa-circle-info"></i> Please log in via the <strong>Event Head Login</strong> button at the top to view and manage students registered for your assigned event.
+          <i class="fa-solid fa-circle-info"></i> Log in via the <strong>Event Head Login</strong> button at the top to view and manage students registered for your assigned event.
         </div>
 
         <div class="panel-header">
@@ -208,7 +211,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Status</th>
-                <th id="actionHeaderCol" style="display:none;">Event Head Actions</th>
+                <th id="actionHeaderCol" style="display:none;">Actions</th>
               </tr>
             </thead>
             <tbody id="registrationsTableBody"></tbody>
@@ -237,10 +240,6 @@
       <div class="gallery-card">
         <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80" alt="Sports Day">
         <div class="gallery-overlay"><span>Athletics Track</span></div>
-      </div>
-      <div class="gallery-card">
-        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Robotics Workshop">
-        <div class="gallery-overlay"><span>Robotics Workshop</span></div>
       </div>
     </div>
   </section>
@@ -385,7 +384,7 @@
     </div>
   </div>
 
-  <div id="toast" class="toast-notification">Notification Message</div>
-  <script src="script.js"></script>
+  <!-- Flask Static JS Connection -->
+  <script src="/static/script.js"></script>
 </body>
 </html>
