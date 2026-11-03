@@ -10,23 +10,31 @@
 </head>
 <body>
 
-  <!-- Top Bar / Auth Header -->
+  <!-- Top Announcement Bar -->
   <div class="top-announcement">
     <div class="announcement-text">
       <i class="fa-solid fa-school"></i> <strong>EventSchool Platform:</strong> School Event Management System
     </div>
     <div class="role-selector" id="topAuthArea">
-      <button class="btn btn-sm btn-primary" onclick="openModal('headLoginModal')"><i class="fa-solid fa-user-shield"></i> Event Head Login</button>
+      <button class="btn btn-sm btn-primary" onclick="openModal('headLoginModal')">
+        <i class="fa-solid fa-user-shield"></i> Event Head Login
+      </button>
     </div>
   </div>
 
-  <!-- Main Navigation Header -->
+  <!-- Main Sticky Header -->
   <header class="main-header">
     <div class="header-container">
-      <a href="#home" class="brand-logo">
-        <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <span>EventSchool</span>
-      </a>
+      <div class="brand-group">
+        <!-- 3-bar Hamburger toggle button for Left Sidebar -->
+        <button class="hamburger-btn" onclick="toggleSidebar()" title="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="#home" class="brand-logo">
+          <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <span>EventSchool</span>
+        </a>
+      </div>
 
       <nav class="nav-links" id="navMenu">
         <a href="#home" class="nav-link active">Home</a>
@@ -39,12 +47,26 @@
 
       <div class="header-actions">
         <a href="#events" class="btn btn-primary">Explore Events</a>
-        <button class="hamburger-btn" onclick="toggleMobileMenu()">
-          <i class="fa-solid fa-bars"></i>
-        </button>
       </div>
     </div>
   </header>
+
+  <!-- Left Side Slide-Out Navigation Drawer -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar-drawer" id="sidebarDrawer">
+    <div class="sidebar-header">
+      <h3><i class="fa-solid fa-bars-staggered"></i> Navigation Menu</h3>
+      <button class="close-sidebar-btn" onclick="toggleSidebar()">&times;</button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="#home" onclick="toggleSidebar()"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#events" onclick="toggleSidebar()"><i class="fa-solid fa-calendar-days"></i> Discover Events</a></li>
+      <li><a href="#categories" onclick="toggleSidebar()"><i class="fa-solid fa-layer-group"></i> Event Categories</a></li>
+      <li><a href="#schedule" onclick="toggleSidebar()"><i class="fa-solid fa-clock"></i> Timelines & Schedule</a></li>
+      <li><a href="#gallery" onclick="toggleSidebar()"><i class="fa-solid fa-images"></i> Photo Gallery</a></li>
+      <li><a href="#dashboard" onclick="toggleSidebar()"><i class="fa-solid fa-gauge"></i> Management Portal</a></li>
+    </ul>
+  </aside>
 
   <!-- Hero Section -->
   <section id="home" class="hero-section">
@@ -160,16 +182,16 @@
     </div>
   </section>
 
-  <!-- Dashboard Section (Event Head Controls) -->
+  <!-- Dashboard Section -->
   <section id="dashboard" class="section-container dashboard-wrapper">
     <div class="section-header">
       <span class="section-subtitle">Management Portal</span>
       <h2 class="section-title"><i class="fa-solid fa-sliders"></i> Event Head Student Manager</h2>
     </div>
 
-    <div class="dashboard-layout" style="grid-template-columns: 1fr;">
+    <div class="dashboard-layout">
       <main class="dash-content">
-        <div id="headWelcomeBanner" style="background:var(--secondary); padding:16px 20px; border-radius:12px; margin-bottom:20px; font-weight:600; color:var(--primary-hover);">
+        <div id="headWelcomeBanner" class="head-welcome-banner">
           <i class="fa-solid fa-circle-info"></i> Please log in via the <strong>Event Head Login</strong> button at the top to view and manage students registered for your assigned event.
         </div>
 
@@ -186,7 +208,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Status</th>
-                <th id="actionHeaderCol" style="display:none;">Event Head Actions (Delete / Disqualify)</th>
+                <th id="actionHeaderCol" style="display:none;">Event Head Actions</th>
               </tr>
             </thead>
             <tbody id="registrationsTableBody"></tbody>
@@ -225,7 +247,7 @@
 
   <!-- Footer -->
   <footer class="main-footer">
-    <div class="footer-container" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:40px;">
+    <div class="footer-container">
       <div>
         <h3><i class="fa-solid fa-graduation-cap"></i> EventSchool</h3>
         <p style="color:#94A3B8; margin-top:8px;">A unified platform for managing all school events, competitions, schedules, and activities.</p>
